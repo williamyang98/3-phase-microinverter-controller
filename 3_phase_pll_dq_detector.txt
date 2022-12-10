@@ -1,0 +1,45 @@
+Consider the output of a ramp phase θ
+
+abc = 3 phase voltages
+dq = real and imaginary state vector of 3-phase voltages
+
+A = amplitude
+
+Va = Asin(wt)
+Va = Asin(wt-2π/3)
+Va = Asin(wt+2π/3)
+
+Vd = +2/3 [ cos(θ)Va + cos(θ-2π/3)Vb + cos(θ+2π/3)Vc ]
+Vq = -2/3 [ sin(θ)Va + sin(θ-2π/3)Vb + sin(θ+2π/3)Vc ]
+
+# Solving for Vq
+
+
+# In control loop
+We use Vq as an error signal
+
+E(s) = Vq(s)
+U(s)/E(s) = (Kp*s + Ki)/s
+
+θ(t) = [Wc + u(t)] t
+θ(s) = [Wc + U(s)]/s
+
+# Responses
+Open   loop: G_OL(s) = A * (Kp*s + Ki)/s * 1/s = A(Kp*s + Ki)/s^2
+Closed loop: G_CL(s) = G_OL(s) / [1 + G_OL(s)]
+	     G_CL(s) = A(Kp*s + Ki)/(s^2 + AKp*s + AKi)
+	     
+# Designing the closed loop response
+If Ki/Kp >> 0, then we can ignore the pole
+
+D(s) = s^2 + 2ζWn*s + Wn^2
+
+Wn = sqrt(AKi)
+ζ = AKp/(2Wn) = AKp/(2sqrt(AKi) 
+ζ = sqrt(A/Ki) * Kp/2
+
+# Design parameters
+ζ = 1/sqrt(2) = 0.707		# Critically damped response
+Wn = 100Hz 			# As a reasonable naturally frequency for 3-phase 50Hz
+A = 240 * sqrt(2) = 339.4 V 	# For our grid voltage
+	     
